@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id        String     @id @default(uuid())
+  name      String     @map("name")
+  email     String     @unique @map("email")
+  password  String     @map("password")
+  country   String?    @map("country")
+  state     String?    @map("state")
+  city      String?    @map("city")
+  address   String?    @map("address")
+  zipCode   String?    @map("zip_code")
+  mobileNo  String?    @map("mobile_no")
+  gender    Gender?    @map("gender")
+  status    UserStatus @default(ACTIVE) @map("status")
+  createdAt DateTime   @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt DateTime   @updatedAt @map("updated_at") @db.DateTime(0)
+  deletedAt DateTime?  @map("deleted_at") @db.DateTime(0)
+
+  @@map("users")
+}
+
+model Member {
+  id        String       @id @default(uuid())
+  firstName String       @map("first_name")
+  lastName  String       @map("last_name")
+  gender    Gender       @map("gender")
+  mobileNo  String?      @map("mobile_no")
+  email     String       @unique @map("email")
+  joinDate  DateTime     @default(now()) @map("join_date")
+  status    MemberStatus @default(ACTIVE) @map("status")
+  payments  Payment[]
+  createdAt DateTime     @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt DateTime     @updatedAt @map("updated_at") @db.DateTime(0)
+  deletedAt DateTime?    @map("deleted_at") @db.DateTime(0)
+
+  @@map("member")
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  memberId      String        @map("member_id")
+  amount        Float         @map("amount")
+  paymentMonth  DateTime      @map("payment_month") // store first day of the month
+  paymentDate   DateTime      @default(now()) @map("paymentDate")
+  paymentMethod PaymentMethod @map("payment_method")
+  paymentStatus PaymentStatus @map("payment_status")
+  member        Member        @relation(fields: [memberId], references: [id])
+  createdAt     DateTime      @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt     DateTime      @updatedAt @map("updated_at") @db.DateTime(0)
+  deletedAt     DateTime?     @map("deleted_at") @db.DateTime(0)
+
+  @@map("payment")
+}
+
+model Expense {
+  id          String          @id @default(uuid())
+  category    ExpenseCategory @map("category")
+  description String?         @map("description")
+  amount      Float           @map("amount")
+  expenseDate DateTime        @default(now()) @map("expense_date")
+  createdAt   DateTime        @default(now()) @map("created_at") @db.DateTime(0)
+  updatedAt   DateTime        @updatedAt @map("updated_at") @db.DateTime(0)
+  deletedAt   DateTime?       @map("deleted_at") @db.DateTime(0)
+
+  @@map("expense")
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum MemberStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum PaymentMethod {
+  CASH
+  UPI
+  CARD
+}
+
+enum PaymentStatus {
+  SUCCESS
+  FAILED
+  PENDING
+}
+
+enum ExpenseCategory {
+  MAINTENANCE
+  EQUIPMENT
+  SALARY
+  ELECTRICITY
+  RENT
+  OTHERS
+}
