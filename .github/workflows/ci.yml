@@ -11,15 +11,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      # 🧩 Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      # ⚙️ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
+      # 📦 Install dependencies (from root)
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Next.js project
-        run: npm run build
+      # 🧠 Install Nx CLI globally (optional but clean)
+      - name: Install Nx CLI
+        run: npm install -g nx
+
+      # 🧬 Run Prisma (if you use it — optional)
+      # - name: Generate Prisma Client
+      #   run: npx prisma generate --schema=apps/backend/prisma/schema.prisma
+
+      # 💻 Build the frontend (Next.js)
+      - name: Build Next.js frontend
+        run: npx nx build frontend
+
+      # 🧩 Build the backend (NestJS)
+      - name: Build NestJS backend
+        run: npx nx build backend
