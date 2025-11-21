@@ -17,7 +17,9 @@
        "@prisma": ["prisma"],
        "@prisma/*": ["prisma/*"],
        "@helper":["helper"],
-       "@helper/*":["helper/*"]
+       "@helper/*":["helper/*"],
+       "@enums":["enums"],
+       "@enums/*":["enums/*"]
     }
   }
 }

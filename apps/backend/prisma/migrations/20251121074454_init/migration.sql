@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE `users` (
-    `id` VARCHAR(191) NOT NULL,
+    `user_id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
@@ -17,12 +17,13 @@ CREATE TABLE `users` (
     `deleted_at` DATETIME(0) NULL,
 
     UNIQUE INDEX `users_email_key`(`email`),
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`user_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `member` (
     `id` VARCHAR(191) NOT NULL,
+    `user_id` VARCHAR(191) NULL,
     `first_name` VARCHAR(191) NOT NULL,
     `last_name` VARCHAR(191) NOT NULL,
     `gender` ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
@@ -67,6 +68,9 @@ CREATE TABLE `expense` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `member` ADD CONSTRAINT `member_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `payment` ADD CONSTRAINT `payment_member_id_fkey` FOREIGN KEY (`member_id`) REFERENCES `member`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
