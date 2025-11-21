@@ -16,6 +16,8 @@
     "paths":{
        "@prisma": ["prisma"],
        "@prisma/*": ["prisma/*"],
+       "@helper":["helper"],
+       "@helper/*":["helper/*"]
     }
   }
 }
