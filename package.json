@@ -2,6 +2,10 @@
   "name": "@gms/source",
   "version": "0.0.0",
   "license": "MIT",
+  "prisma": {
+    "schema": "apps/backend/prisma/schema.prisma",
+    "seed": "tsx apps/backend/prisma/seed.ts"
+  },
   "scripts": {
     "prisma:generate": "prisma generate --schema=./apps/backend/prisma/schema.prisma",
     "prisma:migrate": "prisma migrate dev --schema=./apps/backend/prisma/schema.prisma",
