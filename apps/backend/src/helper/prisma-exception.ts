@@ -15,12 +15,12 @@ import {
 
 export function prismaErrorHandler(error: unknown) {
   if (error instanceof PrismaClientKnownRequestError) {
-    switch (error.code) {
+    switch (error?.code) {
       case 'P2000':
         return new BadRequestException('Input value is too long.');
       case 'P2002':
         return new ConflictException(
-          `Unique constraint failed on the field(s): ${error.meta?.target}`
+          `Unique constraint failed on the field(s): ${error?.meta?.target}`
         );
       case 'P2003':
         return new BadRequestException('Foreign key constraint failed.');
@@ -32,7 +32,7 @@ export function prismaErrorHandler(error: unknown) {
         return new UnauthorizedException('Database constraint violation.');
       default:
         return new InternalServerErrorException(
-          `Prisma error: ${error.message}`
+          `Prisma error: ${error?.message}`
         );
     }
   } else if (error instanceof PrismaClientValidationError) {
