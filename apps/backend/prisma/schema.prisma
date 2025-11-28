@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Users {
-  id        String     @id @default(uuid())
+  userId    String     @id @default(uuid()) @map("user_id")
   name      String     @map("name")
   email     String     @unique @map("email")
   password  String     @map("password")
@@ -29,12 +29,14 @@ model Users {
   createdAt DateTime   @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt DateTime   @updatedAt @map("updated_at") @db.DateTime(0)
   deletedAt DateTime?  @map("deleted_at") @db.DateTime(0)
+  members   Member[]
 
   @@map("users")
 }
 
 model Member {
   id        String       @id @default(uuid())
+  userId    String?      @map("user_id")
   firstName String       @map("first_name")
   lastName  String       @map("last_name")
   gender    Gender       @map("gender")
@@ -46,6 +48,7 @@ model Member {
   createdAt DateTime     @default(now()) @map("created_at") @db.DateTime(0)
   updatedAt DateTime     @updatedAt @map("updated_at") @db.DateTime(0)
   deletedAt DateTime?    @map("deleted_at") @db.DateTime(0)
+  users     Users?       @relation(fields: [userId], references: [userId])
 
   @@map("member")
 }
