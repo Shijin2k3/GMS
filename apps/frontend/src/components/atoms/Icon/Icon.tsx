@@ -3,7 +3,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ToolTip } from '../ToolTip/Tooltip';
 import { IconNames, IconTypeMap } from './icon.type';
-import { IconProps } from '@types/atoms.type';
+import { IconProps } from '../../../types/atoms.type';
 
 config.autoAddCss = false;
 export function Icon({
