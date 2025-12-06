@@ -14,7 +14,8 @@
      "@components/*": ["apps/frontend/src/components/*"],
       "@hooks/*": ["apps/frontend/src/hooks/*"],
       "@services/*": ["apps/frontend/src/services/*"],
-      "@helpers/*": ["apps/frontend/src/helpers/*"]
+      "@helpers/*": ["apps/frontend/src/helpers/*"],
+      "@types/*": ["apps/frontend/src/types/*"],
     },
     "lib": [
       "dom",
