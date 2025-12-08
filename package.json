@@ -12,11 +12,16 @@
     "prisma:migrate:deploy": "prisma migrate deploy --schema=./apps/backend/prisma/schema.prisma",
     "prisma:migrate:reset": "prisma migrate reset --schema=./apps/backend/prisma/schema.prisma",
     "prisma:studio": "prisma studio --schema=./apps/backend/prisma/schema.prisma",
-    "prisma:seed": "prisma db seed --schema=./apps/backend/prisma/schema.prisma"
+    "prisma:seed": "prisma db seed --schema=./apps/backend/prisma/schema.prisma",
+    "prettier:write": "prettier --write ."
   },
   "private": true,
   "dependencies": {
     "@fastify/static": "^8.3.0",
+    "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "@fortawesome/free-regular-svg-icons": "^7.1.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@fortawesome/react-fontawesome": "^3.1.1",
     "@nestjs/common": "^11.0.0",
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.0",
@@ -27,6 +32,7 @@
     "@nestjs/swagger": "^11.2.1",
     "@prisma/client": "^6.17.1",
     "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-tooltip": "^1.2.8",
     "axios": "^1.6.0",
     "bcrypt": "^6.0.0",
     "class-transformer": "^0.5.1",
@@ -43,7 +49,7 @@
     "react-dom": "19.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
-    "tailwind-merge": "^3.3.1",
+    "tailwind-merge": "^3.4.0",
     "tailwind-variants": "^3.1.1"
   },
   "devDependencies": {
@@ -75,7 +81,7 @@
     "jest-util": "^30.0.2",
     "nx": "21.6.3",
     "postcss": "^8.5.6",
-    "prettier": "^2.6.2",
+    "prettier": "^2.8.8",
     "prisma": "^6.17.1",
     "tailwindcss": "^3.4.18",
     "ts-jest": "^29.4.0",

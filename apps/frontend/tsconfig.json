@@ -10,6 +10,13 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+  "paths": {
+     "@components/*": ["apps/frontend/src/components/*"],
+      "@hooks/*": ["apps/frontend/src/hooks/*"],
+      "@services/*": ["apps/frontend/src/services/*"],
+      "@helpers/*": ["apps/frontend/src/helpers/*"],
+      "@types/*": ["apps/frontend/src/types/*"],
+    },
     "lib": [
       "dom",
       "dom.iterable",
