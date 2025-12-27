@@ -40,9 +40,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     } else if (this.isPrismaError(exception)) {
       errorResponse = prismaErrorHandler(exception);
     } else if (exception instanceof Error) {
-      errorResponse = new InternalServerErrorException(
-        exception?.message ?? ''
-      );
+      errorResponse = new InternalServerErrorException(exception?.message ?? '');
     } else {
       errorResponse = new InternalServerErrorException();
     }
@@ -51,15 +49,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     const responseBody = errorResponse.getResponse?.();
     const message =
-      responseBody &&
-      typeof responseBody === 'object' &&
-      'message' in responseBody
+      responseBody && typeof responseBody === 'object' && 'message' in responseBody
         ? responseBody['message']
         : errorResponse.message;
     const errorCode =
-      typeof responseBody === 'object' && 'code' in responseBody
-        ? responseBody['code']
-        : '';
+      typeof responseBody === 'object' && 'code' in responseBody ? responseBody['code'] : '';
     this.logger.error(`${errorResponse.message} -> ${request.url}`);
 
     response.status(status).send({
