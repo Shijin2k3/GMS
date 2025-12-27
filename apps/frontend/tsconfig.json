@@ -12,6 +12,7 @@
     "isolatedModules": true,
   "paths": {
      "@components/*": ["apps/frontend/src/components/*"],
+     "@atoms/*": ["apps/frontend/src/components/atoms/*"],
       "@hooks/*": ["apps/frontend/src/hooks/*"],
       "@services/*": ["apps/frontend/src/services/*"],
       "@helpers/*": ["apps/frontend/src/helpers/*"],
