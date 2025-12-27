@@ -38,10 +38,10 @@ model Member {
   id        String       @id @default(uuid())
   userId    String?      @map("user_id")
   firstName String       @map("first_name")
-  lastName  String       @map("last_name")
+  lastName  String?      @map("last_name")
   gender    Gender       @map("gender")
-  mobileNo  String?      @map("mobile_no")
-  email     String       @unique @map("email")
+  mobileNo  String       @unique @map("mobile_no")
+  email     String?      @unique @map("email")
   joinDate  DateTime     @default(now()) @map("join_date")
   status    MemberStatus @default(ACTIVE) @map("status")
   payments  Payment[]
