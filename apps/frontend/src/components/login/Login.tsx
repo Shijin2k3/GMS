@@ -1,34 +1,39 @@
 'use client';
 
-import { useRouter } from "next/navigation";
-import { useState, useCallback, ChangeEvent, FormEvent } from "react";
+import { Button } from '@components/atoms/Button/button';
+import { InputField } from '@components/atoms/Input/InputField';
+import { useRouter } from 'next/navigation';
+import { FormProvider, useForm } from 'react-hook-form';
+
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
 
 export default function Login() {
   const router = useRouter();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const methods = useForm<LoginFormValues>();
 
-  const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  }, []);
+  const {
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = methods;
 
-  const handlePasswordChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  }, []);
+  const onSubmit = (data: LoginFormValues) => {
+    const { email, password } = data;
 
-  const handleLogin = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError(""); 
-
-    if (email === "admin@gmail.com" && password === "123456") {
+    if (email === 'admin@gmail.com' && password === '123456') {
       document.cookie = `token=test_token; path=/;`;
-      router.push("/dashboard");
+      router.push('/dashboard');
     } else {
-      setError("Invalid credentials");
+      setError('root', {
+        type: 'manual',
+        message: 'Invalid credentials',
+      });
     }
-  }, [email, password, router]);
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
@@ -37,39 +42,36 @@ export default function Login() {
           Login
         </h2>
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="text-sm font-medium">Email</label>
-            <input
-              type="email"
-              className="w-full border rounded-lg px-4 py-2 mt-1"
-              value={email}
-              onChange={handleEmailChange}
-              required
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <InputField
+              name="email"
+              label="Email"
+              rules={{ required: 'Email is required' }}
+              isRequired
             />
-          </div>
 
-          <div>
-            <label className="text-sm font-medium">Password</label>
-            <input
-              type="password"
-              className="w-full border rounded-lg px-4 py-2 mt-1"
-              value={password}
-              onChange={handlePasswordChange}
-              required
+            <InputField
+              name="password"
+              label="Password"
+              type='password'
+              rules={{ required: 'Password is required' }}
+              isRequired
             />
-          </div>
 
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+            {errors.root && (
+              <p className="text-red-500 text-sm text-center">
+                {errors.root.message}
+              </p>
+            )}
 
-        <button
-     type="submit"
-  className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors"
-   >
-  Login
-</button>
-
-        </form>
+            <Button
+              label="Login"
+              type="submit"
+              className="w-full bg-blue-500 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+            />
+          </form>
+        </FormProvider>
       </div>
     </div>
   );
