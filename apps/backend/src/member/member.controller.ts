@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { CreateMemberDto, UpdateMemberDto } from './dto';
 import { MemberService } from './member.service';
 import { ApiBearerAuth } from '@nestjs/swagger';
@@ -25,8 +25,18 @@ export class MemberController {
     return this.memberService.findAll(query);
   }
 
-  @Patch('id')
+  @Patch(':id')
   update(@Param('id') id: string, @Body() dto: UpdateMemberDto) {
     return this.memberService.update(id, dto);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.memberService.delete(id);
+  }
+
+  @Patch(':id/active')
+  active(@Param('id') id: string) {
+    return this.memberService.active(id);
   }
 }

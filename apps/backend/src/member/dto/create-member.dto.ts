@@ -29,11 +29,6 @@ export class CreateMemberDto {
   @IsNotEmpty()
   gender: Gender;
 
-  @ApiPropertyOptional()
-  @IsEnum(MemberStatus)
-  @IsOptional()
-  status: MemberStatus;
-
   @ApiProperty()
   @Type(() => Date)
   @IsDate()

@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '@prisma';
 import { CreateMemberDto, UpdateMemberDto } from './dto';
 import { buildPrismaQueryParamsAndSort, PaginationQueryDto } from '@helper';
+import { MemberStatus } from '@prisma/client';
 
 @Injectable()
 export class MemberService {
@@ -9,7 +10,7 @@ export class MemberService {
 
   async create(dto: CreateMemberDto) {
     const result = await this.prisma.member.create({
-      data: dto,
+      data: { ...dto, status: MemberStatus.ACTIVE },
     });
     return { apiResult: result, responseMessage: 'New Member Created successfully' };
   }
@@ -48,5 +49,39 @@ export class MemberService {
     });
 
     return { apiResult: member, responseMessage: 'Member Updated successfully' };
+  }
+
+  async delete(id: string) {
+    const existingMember = await this.prisma.member.findUnique({
+      where: { id },
+    });
+
+    if (!existingMember) {
+      throw new BadRequestException('Member does not exist');
+    }
+
+    const member = await this.prisma.member.update({
+      where: { id },
+      data: { status: MemberStatus.INACTIVE, deletedAt: new Date() },
+    });
+
+    return { apiResult: member, responseMessage: 'Member Deleted successfully' };
+  }
+
+  async active(id: string) {
+    const existingMember = await this.prisma.member.findUnique({
+      where: { id },
+    });
+
+    if (!existingMember) {
+      throw new BadRequestException('Member does not exist');
+    }
+
+    const member = await this.prisma.member.update({
+      where: { id },
+      data: { status: MemberStatus.ACTIVE, deletedAt: null },
+    });
+
+    return { apiResult: member, responseMessage: 'Member Activated successfully' };
   }
 }
