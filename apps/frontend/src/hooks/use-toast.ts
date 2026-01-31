@@ -7,6 +7,7 @@ import type {
     ToastActionElement,
     ToastProps,
 } from "@components/ui/toast"
+import { useEffect, useState } from "react"
 
 const toastLimit = 1
 const toastRemoveDelay = 1000000
@@ -92,8 +93,6 @@ export const reducer = (state: State, action: Action): State => {
 
         case "dismissToast": {
             const { toastId } = action
-
-            // ! Side effects ! - This should be outside the reducer, but staying original for functionality.
             if (toastId) {
                 addToRemoveQueue(toastId)
             } else {
@@ -171,9 +170,9 @@ function toast({ ...props }: Toast) {
 }
 
 function useToast() {
-    const [state, setState] = React.useState<State>(memoryState)
+    const [state, setState] = useState<State>(memoryState)
 
-    React.useEffect(() => {
+    useEffect(() => {
         listeners.push(setState)
         return () => {
             const index = listeners.indexOf(setState)

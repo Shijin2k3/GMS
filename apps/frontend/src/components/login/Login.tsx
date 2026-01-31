@@ -36,9 +36,6 @@ export default function Login() {
         });
       }
     },
-    // Centralized error handling handles the notification,
-    // but we can still clear local state or show specific form errors here if needed.
-    // Given the user request, we minimize local error handling.
   });
 
   const onSubmit = (data: LoginFormValues) => {

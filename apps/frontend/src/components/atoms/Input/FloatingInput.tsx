@@ -4,29 +4,20 @@ import { Label } from '@components/ui/Label';
 import { cn } from 'apps/frontend/lib';
 import * as React from 'react';
 import { Input } from './Input';
+import { forwardRef, InputHTMLAttributes } from 'react';
 
+export type InputProps = InputHTMLAttributes<HTMLInputElement>;
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
-
-const FloatingInput = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, ...props }, ref) => {
-    return (
-      <Input
-        ref={ref}
-        {...props}
-        placeholder=" "
-        className={cn('peer', className)}
-      />
-    );
-  },
-);
+const FloatingInput = forwardRef<HTMLInputElement, InputProps>(({ className, ...props }, ref) => {
+  return <Input ref={ref} {...props} placeholder=" " className={cn('peer', className)} />;
+});
 FloatingInput.displayName = 'FloatingInput';
 
 interface FloatingLabelExtraProps {
   noFloat?: boolean;
 }
 
-const FloatingLabel = React.forwardRef<
+const FloatingLabel = forwardRef<
   React.ComponentRef<typeof Label>,
   React.ComponentPropsWithoutRef<typeof Label> & FloatingLabelExtraProps
 >(({ className, noFloat = false, ...props }, ref) => {
@@ -37,11 +28,10 @@ const FloatingLabel = React.forwardRef<
       className={cn(
         'absolute left-4 top-1/2 -translate-y-1/2 text-sm text-muted',
         'transition-all duration-200 pointer-events-none',
-        !noFloat &&
-          [
-            'peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary',
-            'peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-xs',
-          ],
+        !noFloat && [
+          'peer-focus:top-2 peer-focus:text-xs peer-focus:text-primary',
+          'peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-xs',
+        ],
         'bg-background px-1',
         className,
       )}
@@ -56,7 +46,7 @@ type FloatingLabelInputProps = InputProps & {
   noFloat?: boolean;
 };
 
-const FloatingLabelInput = React.forwardRef<
+const FloatingLabelInput = forwardRef<
   React.ComponentRef<typeof FloatingInput>,
   React.PropsWithoutRef<FloatingLabelInputProps>
 >(({ id, label, labelClassName, noFloat, ...props }, ref) => {
@@ -64,11 +54,7 @@ const FloatingLabelInput = React.forwardRef<
     <div className="relative">
       <FloatingInput ref={ref} id={id} {...props} />
       {label && (
-        <FloatingLabel
-          htmlFor={id}
-          className={labelClassName}
-          noFloat={noFloat}
-        >
+        <FloatingLabel htmlFor={id} className={labelClassName} noFloat={noFloat}>
           {label}
         </FloatingLabel>
       )}
