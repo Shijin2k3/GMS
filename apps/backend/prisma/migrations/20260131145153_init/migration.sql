@@ -17,6 +17,7 @@ CREATE TABLE `users` (
     `deleted_at` DATETIME(0) NULL,
 
     UNIQUE INDEX `users_email_key`(`email`),
+    INDEX `users_name_idx`(`name`),
     PRIMARY KEY (`user_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -25,17 +26,19 @@ CREATE TABLE `member` (
     `id` VARCHAR(191) NOT NULL,
     `user_id` VARCHAR(191) NULL,
     `first_name` VARCHAR(191) NOT NULL,
-    `last_name` VARCHAR(191) NOT NULL,
+    `last_name` VARCHAR(191) NULL,
     `gender` ENUM('MALE', 'FEMALE', 'OTHER') NOT NULL,
-    `mobile_no` VARCHAR(191) NULL,
-    `email` VARCHAR(191) NOT NULL,
+    `mobile_no` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NULL,
     `join_date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `status` ENUM('ACTIVE', 'INACTIVE') NOT NULL DEFAULT 'ACTIVE',
     `created_at` DATETIME(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updated_at` DATETIME(0) NOT NULL,
     `deleted_at` DATETIME(0) NULL,
 
+    UNIQUE INDEX `member_mobile_no_key`(`mobile_no`),
     UNIQUE INDEX `member_email_key`(`email`),
+    INDEX `member_user_id_idx`(`user_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -52,6 +55,7 @@ CREATE TABLE `payment` (
     `updated_at` DATETIME(0) NOT NULL,
     `deleted_at` DATETIME(0) NULL,
 
+    INDEX `payment_member_id_idx`(`member_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
