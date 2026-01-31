@@ -50,7 +50,7 @@ export const InputField = ({
   onBlur?: () => void;
   labelAbove?: boolean;
 }) => {
-  const { control, formState } = useFormContext();
+  const { control, formState,clearErrors } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
 
   const errorMessage = formState.errors?.[name]?.message as string | undefined;
@@ -72,6 +72,7 @@ export const InputField = ({
         disabled={isDisabled}
         render={({ field }) => {
           const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+            clearErrors('root')
             field.onChange(event.target.value);
           };
 
@@ -113,15 +114,11 @@ export const InputField = ({
                   <Button
                     type="button"
                     variant="ghost"
+                    icon={showPassword ? 'eyeClosed' : 'eye'}
                     size="sm"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent flex items-center"
+                    className="absolute right-0 z-20 top-0 h-full px-3 py-2  hover:bg-transparent flex items-center"
                   >
-                    <Icon
-                      icon={showPassword ? 'eyeClosed' : 'eye'}
-                      className="h-4 w-4"
-                      size="sm"
-                    />
                   </Button>
                 )}
 
