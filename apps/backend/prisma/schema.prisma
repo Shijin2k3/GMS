@@ -31,6 +31,7 @@ model Users {
   deletedAt DateTime?  @map("deleted_at") @db.DateTime(0)
   members   Member[]
 
+  @@index([name])
   @@map("users")
 }
 
@@ -50,6 +51,7 @@ model Member {
   deletedAt DateTime?    @map("deleted_at") @db.DateTime(0)
   users     Users?       @relation(fields: [userId], references: [userId])
 
+  @@index([userId])
   @@map("member")
 }
 
@@ -57,7 +59,6 @@ model Payment {
   id            String        @id @default(uuid())
   memberId      String        @map("member_id")
   amount        Float         @map("amount")
-  paymentMonth  DateTime      @map("payment_month") // store first day of the month
   paymentDate   DateTime      @default(now()) @map("paymentDate")
   paymentMethod PaymentMethod @map("payment_method")
   paymentStatus PaymentStatus @map("payment_status")
@@ -66,6 +67,7 @@ model Payment {
   updatedAt     DateTime      @updatedAt @map("updated_at") @db.DateTime(0)
   deletedAt     DateTime?     @map("deleted_at") @db.DateTime(0)
 
+  @@index([memberId])
   @@map("payment")
 }
 

@@ -24,7 +24,7 @@ export class CreateMemberDto {
   @IsNotEmpty()
   mobileNo: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: Gender, example: Gender.MALE })
   @IsEnum(Gender)
   @IsNotEmpty()
   gender: Gender;
