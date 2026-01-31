@@ -17,6 +17,9 @@
       "@services/*": ["apps/frontend/src/services/*"],
       "@helpers/*": ["apps/frontend/src/helpers/*"],
       "@types/*": ["apps/frontend/src/types/*"],
+      "@api": ["apps/frontend/src/api/index.ts"],
+      "@api/*": ["apps/frontend/src/api/*"],
+      "@lib/*": ["apps/frontend/lib/*"]
     },
     "lib": [
       "dom",

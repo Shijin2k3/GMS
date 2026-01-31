@@ -4,6 +4,8 @@ import { Button } from '@components/atoms/Button/button';
 import { InputField } from '@components/atoms/Input/InputField';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
+import { authService } from '@api';
+import { useMutation } from '@tanstack/react-query';
 
 type LoginFormValues = {
   email: string;
@@ -21,26 +23,32 @@ export default function Login() {
     setError,
   } = methods;
 
-  const onSubmit = (data: LoginFormValues) => {
-    const { email, password } = data;
+  const { mutate: login, isPending } = useMutation({
+    mutationFn: (data: LoginFormValues) => authService.login(data),
+    onSuccess: (response: any) => {
+      if (response?.data?.accessToken) {
+        document.cookie = `token=${response.data.accessToken}; path=/;`;
+        router.push('/dashboard');
+      } else {
+        setError('root', {
+          type: 'manual',
+          message: 'Invalid response from server',
+        });
+      }
+    },
+    // Centralized error handling handles the notification,
+    // but we can still clear local state or show specific form errors here if needed.
+    // Given the user request, we minimize local error handling.
+  });
 
-    if (email === 'admin@gmail.com' && password === '123456') {
-      document.cookie = `token=test_token; path=/;`;
-      router.push('/dashboard');
-    } else {
-      setError('root', {
-        type: 'manual',
-        message: 'Invalid credentials',
-      });
-    }
+  const onSubmit = (data: LoginFormValues) => {
+    login(data);
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
       <div className="bg-white w-full max-w-md p-8 rounded-xl shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-900">
-          Login
-        </h2>
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-900">Login</h2>
 
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -54,20 +62,19 @@ export default function Login() {
             <InputField
               name="password"
               label="Password"
-              type='password'
+              type="password"
               rules={{ required: 'Password is required' }}
               isRequired
             />
 
             {errors.root && (
-              <p className="text-red-500 text-sm text-center">
-                {errors.root.message}
-              </p>
+              <p className="text-red-500 text-sm text-center">{errors.root.message}</p>
             )}
 
             <Button
-              label="Login"
+              label={isPending ? 'Logging in...' : 'Login'}
               type="submit"
+              disabled={isPending}
               className="w-full bg-blue-500 py-2 rounded-lg hover:bg-blue-600 transition-colors"
             />
           </form>
