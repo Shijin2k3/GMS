@@ -33,6 +33,13 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, documentFactory);
 
+  app.enableCors({
+    methods: 'GET,PUT,PATCH,POST,DELETE',
+    allowedHeaders: '*',
+    origin: '*',
+    credentials: true,
+  });
+
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const port = process.env.API_PORT || 4200;

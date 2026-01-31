@@ -18,6 +18,9 @@ export class MemberService {
   async findOne(id: string) {
     const member = await this.prisma.member.findUnique({
       where: { id },
+      include: {
+        payments: true,
+      },
     });
 
     if (!member) {
