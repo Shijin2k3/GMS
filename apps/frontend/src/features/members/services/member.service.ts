@@ -1,23 +1,23 @@
-import apiClient from '@/api/client';
+import api from "@/services/axios";
 
 export const memberService = {
     findAll: async (params?: any) => {
-        return apiClient.get('/member', { params });
+        return api.get('/member', { params });
     },
     findOne: async (id: string) => {
-        return apiClient.get(`/member/${id}`);
+        return api.get(`/member/${id}`);
     },
     create: async (data: any) => {
-        return apiClient.post('/member', data);
+        return api.post('/member', data);
     },
     update: async (id: string, data: any) => {
-        return apiClient.patch(`/member/${id}`, data);
+        return api.patch(`/member/${id}`, data);
     },
     delete: async (id: string) => {
-        return apiClient.delete(`/member/${id}`);
+        return api.delete(`/member/${id}`);
     },
     active: async (id: string) => {
-        return apiClient.patch(`/member/${id}/active`);
+        return api.patch(`/member/${id}/active`);
     },
 };
 

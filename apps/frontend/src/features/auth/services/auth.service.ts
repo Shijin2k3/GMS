@@ -1,11 +1,11 @@
-import apiClient from '@/api/client';
+import api from "@/services/axios";
 
 export const authService = {
     login: async (data: any) => {
-        return apiClient.post('/auth/login', data);
+        return api.post('/auth/login', data);
     },
     signup: async (data: any) => {
-        return apiClient.post('/auth/signup', data);
+        return api.post('/auth/signup', data);
     },
     logout: () => {
         if (typeof window !== 'undefined') {

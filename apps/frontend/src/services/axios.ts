@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://192.168.43.188:4200/api';
 
-const apiClient = axios.create({
+const api = axios.create({
     baseURL: API_BASE_URL,
     headers: {
         'Content-Type': 'application/json',
@@ -11,7 +11,7 @@ const apiClient = axios.create({
 });
 
 // Request interceptor to add auth token
-apiClient.interceptors.request.use(
+api.interceptors.request.use(
     (config) => {
         if (typeof window !== 'undefined') {
             const token = document.cookie
@@ -31,7 +31,7 @@ apiClient.interceptors.request.use(
 );
 
 // Response interceptor for global error handling
-apiClient.interceptors.response.use(
+api.interceptors.response.use(
     (response) => response.data,
     (error) => {
         const errorMessage = error.response?.data?.message || error.message || 'Something went wrong';
@@ -56,4 +56,4 @@ apiClient.interceptors.response.use(
     }
 );
 
-export default apiClient;
+export default api;
