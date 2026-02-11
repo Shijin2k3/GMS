@@ -1,4 +1,4 @@
-import apiClient from './client';
+import apiClient from '@/api/client';
 
 export const memberService = {
     findAll: async (params?: any) => {
@@ -20,3 +20,4 @@ export const memberService = {
         return apiClient.patch(`/member/${id}/active`);
     },
 };
+

@@ -1,5 +1,5 @@
-import Dashboard from "@components/dashboard/DashBoard";
-import { Metadata } from "next";
+import { Dashboard } from '@/features/members';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
@@ -9,3 +9,4 @@ const Page = () => {
 };
 
 export default Page;
+

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@components/atoms/Button/button';
+import { Button } from '@/components/atoms/Button/button';
 import { useRouter, usePathname } from 'next/navigation';
 import { cn } from '@lib';
 
@@ -36,3 +36,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

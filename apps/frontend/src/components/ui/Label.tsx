@@ -17,3 +17,4 @@ const Label = forwardRef<
 Label.displayName = LabelPrimitive.Root.displayName;
 
 export { Label };
+

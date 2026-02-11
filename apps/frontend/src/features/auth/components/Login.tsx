@@ -1,10 +1,10 @@
 'use client';
 
-import { Button } from '@components/atoms/Button/button';
-import { InputField } from '@components/atoms/Input/InputField';
+import { Button } from '@/components/atoms/Button/button';
+import { InputField } from '@/components/atoms/Input/InputField';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
-import { authService } from '@api';
+import { authService } from '../services/auth.service';
 import { useMutation } from '@tanstack/react-query';
 
 type LoginFormValues = {
@@ -12,7 +12,7 @@ type LoginFormValues = {
   password: string;
 };
 
-export default function Login() {
+export function Login() {
   const router = useRouter();
 
   const methods = useForm<LoginFormValues>();
@@ -80,3 +80,4 @@ export default function Login() {
     </div>
   );
 }
+

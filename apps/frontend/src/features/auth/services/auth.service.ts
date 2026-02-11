@@ -1,4 +1,4 @@
-import apiClient from './client';
+import apiClient from '@/api/client';
 
 export const authService = {
     login: async (data: any) => {
@@ -14,3 +14,4 @@ export const authService = {
         }
     },
 };
+

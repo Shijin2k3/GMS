@@ -7,7 +7,7 @@ import { IconNames } from '../Icon/icon.type';
 import { Icon } from '../Icon/Icon';
 import { Button } from '../Button/button';
 import { Input } from './Input';
-import { Label } from '@components/ui/Label';
+import { Label } from '@/components/ui/Label';
 
 export const InputField = ({
   name,
@@ -133,3 +133,4 @@ export const InputField = ({
     </div>
   );
 };
+

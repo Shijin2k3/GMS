@@ -1,6 +1,6 @@
 'use client';
 
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@components/ui/ToolTip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/ToolTip';
 import { cn } from '@lib';
 import { ReactElement, ReactNode } from 'react';
 
@@ -33,3 +33,4 @@ export const ToolTip = ({
     </TooltipProvider>
   );
 };
+

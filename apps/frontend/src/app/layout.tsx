@@ -1,5 +1,5 @@
 import { Toaster } from '@/components/ui/toaster';
-import QueryProvider from '../providers/QueryProvider';
+import QueryProvider from '@/providers/QueryProvider';
 import './global.css';
 
 export const metadata = {
@@ -19,3 +19,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+

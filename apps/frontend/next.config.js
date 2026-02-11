@@ -13,13 +13,14 @@ const nextConfig = {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@': path.resolve(__dirname, 'src'),
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@atoms': path.resolve(__dirname, 'src/components/atoms'),
-      '@hooks': path.resolve(__dirname, 'src/hooks'),
-      '@services': path.resolve(__dirname, 'src/services'),
-      '@helpers': path.resolve(__dirname, 'src/helpers'),
-      '@types': path.resolve(__dirname, 'src/types'),
-      '@api': path.resolve(__dirname, 'src/api'),
+      '@/components': path.resolve(__dirname, 'src/components'),
+      '@/atoms': path.resolve(__dirname, 'src/components/atoms'),
+      '@/hooks': path.resolve(__dirname, 'src/hooks'),
+      '@/services': path.resolve(__dirname, 'src/services'),
+      '@/helpers': path.resolve(__dirname, 'src/helpers'),
+      '@/types': path.resolve(__dirname, 'src/types'),
+      '@/api': path.resolve(__dirname, 'src/api'),
+      '@/features': path.resolve(__dirname, 'src/features'),
       '@lib': path.resolve(__dirname, 'lib'),
     };
     return config;

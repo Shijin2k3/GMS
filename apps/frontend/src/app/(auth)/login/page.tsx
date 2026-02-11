@@ -1,7 +1,8 @@
-import Login from '@components/login/Login';
+import { Login } from '@/features/auth';
 
 const Page = () => {
   return <Login />;
 };
 
 export default Page;
+

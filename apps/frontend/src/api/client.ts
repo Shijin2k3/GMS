@@ -1,4 +1,4 @@
-import { toast } from '@hooks/use-toast';
+import { toast } from '@/hooks/use-toast';
 import axios from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://192.168.43.188:4200/api';

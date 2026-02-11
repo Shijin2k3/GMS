@@ -1,6 +1,6 @@
 'use client';
 
-import { Label } from '@components/ui/Label';
+import { Label } from '@/components/ui/Label';
 import { cn } from '@lib';
 import * as React from 'react';
 import { Input } from './Input';
@@ -64,3 +64,4 @@ const FloatingLabelInput = forwardRef<
 FloatingLabelInput.displayName = 'FloatingLabelInput';
 
 export { FloatingInput, FloatingLabel, FloatingLabelInput };
+

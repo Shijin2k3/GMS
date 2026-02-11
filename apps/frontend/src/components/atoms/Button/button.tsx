@@ -1,4 +1,4 @@
-import { ButtonProps, Button as ShadCnButton } from '@components/ui/button';
+import { ButtonProps, Button as ShadCnButton } from '@/components/ui/button';
 import { IconNames } from '../Icon/icon.type';
 import { Icon } from '../Icon/Icon';
 import { cn } from '@lib';
@@ -43,3 +43,4 @@ export const Button = ({
     </ShadCnButton>
   );
 };
+

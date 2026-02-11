@@ -1,7 +1,7 @@
 import { IconDefinition, config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ToolTip } from '@atoms/ToolTip/Tooltip';
+import { ToolTip } from '@/atoms/ToolTip/Tooltip';
 import { IconNames, IconTypeMap } from './icon.type';
 import { IconProps } from '@types';
 
@@ -48,3 +48,4 @@ export function Icon({
     </ToolTip>
   );
 }
+
