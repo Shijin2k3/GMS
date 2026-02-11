@@ -1,7 +1,7 @@
 import { toast } from '@hooks/use-toast';
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4200/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://192.168.43.188:4200/api';
 
 const apiClient = axios.create({
     baseURL: API_BASE_URL,
@@ -38,7 +38,7 @@ apiClient.interceptors.response.use(
 
         // Centralized error notification using Shadcn Toast
         if (typeof window !== 'undefined') {
-            console.error('API Error:', errorMessage);
+            console.log('API Error:', errorMessage);
             toast({
                 variant: "destructive",
                 title: "Error",

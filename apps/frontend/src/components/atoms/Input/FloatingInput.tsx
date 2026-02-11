@@ -1,7 +1,7 @@
 'use client';
 
 import { Label } from '@components/ui/Label';
-import { cn } from 'apps/frontend/lib';
+import { cn } from '@lib';
 import * as React from 'react';
 import { Input } from './Input';
 import { forwardRef, InputHTMLAttributes } from 'react';

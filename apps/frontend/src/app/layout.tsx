@@ -1,5 +1,5 @@
+import { Toaster } from '@/components/ui/toaster';
 import QueryProvider from '../providers/QueryProvider';
-import { Toaster } from '@components/ui/toaster';
 import './global.css';
 
 export const metadata = {

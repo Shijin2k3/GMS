@@ -1,7 +1,7 @@
-import { cn } from "apps/frontend/lib";
-import { ButtonProps, Button as ShadCnButton } from "@components/ui/button";
-import { IconNames } from "../Icon/icon.type";
-import { Icon } from "../Icon/Icon";
+import { ButtonProps, Button as ShadCnButton } from '@components/ui/button';
+import { IconNames } from '../Icon/icon.type';
+import { Icon } from '../Icon/Icon';
+import { cn } from '@lib';
 
 export interface ButtonType extends ButtonProps {
   label?: string;
@@ -10,7 +10,7 @@ export interface ButtonType extends ButtonProps {
   iconClassName?: string;
   contentClassName?: string;
   labelClassName?: string;
-    className?: string;
+  className?: string;
   caption?: string;
   captionClassName?: string;
 }
@@ -28,15 +28,12 @@ export const Button = ({
   ...props
 }: ButtonType) => {
   return (
-    <ShadCnButton
-      className={cn('text-lg font-bold', className)}
-      {...props}
-    >
+    <ShadCnButton className={cn('text-lg font-bold', className)} {...props}>
       <div
         className={cn(
           'flex items-center text-lg font-bold',
           iconPosition === 'start' ? 'gap-2' : 'gap-2 flex-row-reverse',
-          contentClassName
+          contentClassName,
         )}
       >
         {icon && <Icon icon={icon} className={iconClassName} />}

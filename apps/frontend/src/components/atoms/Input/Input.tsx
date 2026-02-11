@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IconNames } from '../Icon/icon.type';
 import { Icon } from '../Icon/Icon';
-import { cn } from 'apps/frontend/lib';
+import { cn } from '@lib';
 import { forwardRef } from 'react';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {

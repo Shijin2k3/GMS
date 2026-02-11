@@ -1,6 +1,7 @@
 {
   "name": "@gms/source",
   "version": "0.0.0",
+  "packageManager": "pnpm@10.29.3",
   "license": "MIT",
   "prisma": {
     "schema": "apps/backend/prisma/schema.prisma",
@@ -16,6 +17,15 @@
     "prettier:write": "prettier --write ."
   },
   "private": true,
+    "pnpm": {
+    "overrides": {
+      "@fortawesome/fontawesome-common-types": "7.2.0",
+      "@fortawesome/react-fontawesome": "3.1.1",
+      "@fortawesome/free-solid-svg-icons": "7.1.0",
+      "@fortawesome/free-regular-svg-icons": "7.1.0",
+      "@fortawesome/free-brands-svg-icons": "7.1.0"
+    }
+  },
   "dependencies": {
     "@fastify/static": "^8.3.0",
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
@@ -44,13 +54,13 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.548.0",
-    "next": "15.2.8",
+    "next": "16.1.6",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "prisma-extension-pagination": "^0.7.5",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "react-hook-form": "^7.69.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
@@ -78,8 +88,8 @@
     "@types/node": "20.19.9",
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.38",
-    "@types/react": "19.0.0",
-    "@types/react-dom": "19.0.0",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
     "autoprefixer": "^10.4.21",
     "baseline-browser-mapping": "^2.9.4",
     "jest": "^30.0.2",

@@ -1,4 +1,4 @@
-import { cn } from 'apps/frontend/lib';
+import { cn } from '@lib';
 import * as React from 'react';
 import { forwardRef } from 'react';
 

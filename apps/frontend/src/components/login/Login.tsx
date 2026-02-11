@@ -26,13 +26,13 @@ export default function Login() {
   const { mutate: login, isPending } = useMutation({
     mutationFn: (data: LoginFormValues) => authService.login(data),
     onSuccess: (response: any) => {
-      if (response?.data?.accessToken) {
-        document.cookie = `token=${response.data.accessToken}; path=/;`;
+      if (response?.data?.result?.accessToken) {
+        document.cookie = `token=${response.data.result.accessToken}; path=/;`;
         router.push('/dashboard');
       } else {
         setError('root', {
           type: 'manual',
-          message: 'Invalid response from server',
+          message: response.data.message,
         });
       }
     },
