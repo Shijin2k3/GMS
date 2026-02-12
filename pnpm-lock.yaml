@@ -96,6 +96,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      fastify:
+        specifier: ^5.7.4
+        version: 5.7.4
       lucide-react:
         specifier: ^0.548.0
         version: 0.548.0(react@19.2.4)
