@@ -1,4 +1,4 @@
-import { Dashboard } from '@/features/members';
+import { Dashboard } from '@/features/members/components/DashBoard';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -9,4 +9,3 @@ const Page = () => {
 };
 
 export default Page;
-
