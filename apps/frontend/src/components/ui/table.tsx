@@ -1,4 +1,4 @@
-import { cn } from 'apps/frontend/lib';
+import { cn } from '@lib';
 import * as React from 'react';
 import { forwardRef } from 'react';
 
@@ -87,3 +87,4 @@ const TableCaption = forwardRef<
 TableCaption.displayName = 'TableCaption';
 
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };
+

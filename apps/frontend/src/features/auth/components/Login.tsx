@@ -1,18 +1,19 @@
 'use client';
 
-import { Button } from '@components/atoms/Button/button';
-import { InputField } from '@components/atoms/Input/InputField';
+import { Button } from '@/components/atoms/Button/button';
+import { InputField } from '@/components/atoms/Input/InputField';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
-import { authService } from '@api';
+import { authService } from '../services/auth.service';
 import { useMutation } from '@tanstack/react-query';
+import { handleLoginProxy } from '@/services/proxy';
 
 type LoginFormValues = {
   email: string;
   password: string;
 };
 
-export default function Login() {
+export function Login() {
   const router = useRouter();
 
   const methods = useForm<LoginFormValues>();
@@ -24,15 +25,12 @@ export default function Login() {
   } = methods;
 
   const { mutate: login, isPending } = useMutation({
-    mutationFn: (data: LoginFormValues) => authService.login(data),
-    onSuccess: (response: any) => {
-      if (response?.data?.accessToken) {
-        document.cookie = `token=${response.data.accessToken}; path=/;`;
-        router.push('/dashboard');
-      } else {
+    mutationFn: (data: LoginFormValues) => handleLoginProxy(data, router),
+    onSuccess: (result: any) => {
+      if (!result.success) {
         setError('root', {
           type: 'manual',
-          message: 'Invalid response from server',
+          message: result.message,
         });
       }
     },

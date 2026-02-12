@@ -3,7 +3,7 @@
 import React, { memo, useCallback } from 'react';
 import { ToolTip } from '../ToolTip/Tooltip';
 import { Button } from './button';
-import { cn } from 'apps/frontend/lib';
+import { cn } from '@lib';
 import { Icon } from '../Icon/Icon';
 
 export type ActionButton<T> = {
@@ -21,21 +21,14 @@ export type ActionButtonsProps<T = any> = {
   className?: string;
 };
 
-const ActionButtons = <T,>({
-  id,
-  actions,
-  data,
-  className,
-}: ActionButtonsProps<T>) => {
+const ActionButtons = <T,>({ id, actions, data, className }: ActionButtonsProps<T>) => {
   return (
     <div className={cn('flex items-center gap-2', className)}>
       {actions.map((action, index) => {
         const disabled = action.isDisabled?.(data) ?? false;
 
         const tooltipMessage =
-          typeof action.tooltip === 'function'
-            ? action.tooltip(data)
-            : action.tooltip;
+          typeof action.tooltip === 'function' ? action.tooltip(data) : action.tooltip;
 
         const handleClick = () => {
           if (!disabled) {
@@ -57,16 +50,10 @@ const ActionButtons = <T,>({
               aria-label={action.type}
               className={cn(
                 'rounded-full transition-colors',
-                disabled
-                  ? 'opacity-50 cursor-not-allowed'
-                  : 'hover:bg-pink-600',
+                disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-pink-600',
               )}
             >
-              <Icon
-                icon={action.iconName}
-                iconColor="white"
-                className="h-4 w-4"
-              />
+              <Icon icon={action.iconName} iconColor="white" className="h-4 w-4" />
             </Button>
           </ToolTip>
         );
@@ -76,3 +63,4 @@ const ActionButtons = <T,>({
 };
 
 export default memo(ActionButtons);
+

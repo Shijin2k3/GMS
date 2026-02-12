@@ -1,10 +1,10 @@
 'use client';
 
-import Navbar from '@components/ui/navbar';
-import { DataTable, TableAction } from '@components/table/DataTable';
+import Navbar from '@/components/ui/navbar';
+import { DataTable, TableAction } from '@/components/table/DataTable';
 import { ColumnDef } from '@tanstack/react-table';
 import { useQuery } from '@tanstack/react-query';
-import { memberService } from '@api';
+import { memberService } from '../services/member.service';
 
 type UserRow = {
   id: string;
@@ -17,7 +17,7 @@ type UserRow = {
   status: string;
 };
 
-export default function Dashboard() {
+export function Dashboard() {
   const { data: members, isLoading } = useQuery({
     queryKey: ['members'],
     queryFn: () => memberService.findAll(),
@@ -76,3 +76,4 @@ export default function Dashboard() {
     </div>
   );
 }
+

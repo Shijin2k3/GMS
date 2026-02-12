@@ -15,29 +15,35 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ⚙️ Install pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
       # ⚙️ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: 'pnpm'
 
       # 📦 Install dependencies (from root)
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --no-frozen-lockfile
 
       # 🧠 Install Nx CLI globally (optional but clean)
       - name: Install Nx CLI
-        run: npm install -g nx
+        run: pnpm add -g nx
 
       # 🧬 Run Prisma (if you use it — optional)
       # - name: Generate Prisma Client
-      #   run: npx prisma generate --schema=apps/backend/prisma/schema.prisma
+      #   run: pnpm exec prisma generate --schema=apps/backend/prisma/schema.prisma
 
       # 💻 Build the frontend (Next.js)
       - name: Build Next.js frontend
-        run: npx nx build frontend
+        run: pnpm exec nx build frontend
 
       # 🧩 Build the backend (NestJS)
       - name: Build NestJS backend
-        run: npx nx build backend
+        run: pnpm exec nx build backend

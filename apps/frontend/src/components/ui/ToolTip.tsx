@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
-import { cn } from 'apps/frontend/lib';
+import { cn } from '@lib';
 import { forwardRef } from 'react';
 
 const TooltipProvider = TooltipPrimitive.Provider;
@@ -30,3 +30,4 @@ const TooltipContent = forwardRef<
 TooltipContent.displayName = 'TooltipContent';
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
+

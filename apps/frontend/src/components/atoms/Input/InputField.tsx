@@ -2,12 +2,12 @@
 
 import { ChangeEvent, useState } from 'react';
 import { Controller, RegisterOptions, useFormContext } from 'react-hook-form';
-import { cn } from 'apps/frontend/lib';
+import { cn } from '@lib';
 import { IconNames } from '../Icon/icon.type';
 import { Icon } from '../Icon/Icon';
 import { Button } from '../Button/button';
 import { Input } from './Input';
-import { Label } from '@components/ui/Label';
+import { Label } from '@/components/ui/Label';
 
 export const InputField = ({
   name,
@@ -50,7 +50,7 @@ export const InputField = ({
   onBlur?: () => void;
   labelAbove?: boolean;
 }) => {
-  const { control, formState,clearErrors } = useFormContext();
+  const { control, formState, clearErrors } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
 
   const errorMessage = formState.errors?.[name]?.message as string | undefined;
@@ -72,7 +72,7 @@ export const InputField = ({
         disabled={isDisabled}
         render={({ field }) => {
           const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-            clearErrors('root')
+            clearErrors('root');
             field.onChange(event.target.value);
           };
 
@@ -118,13 +118,11 @@ export const InputField = ({
                     size="sm"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-0 z-20 top-0 h-full px-3 py-2  hover:bg-transparent flex items-center"
-                  >
-                  </Button>
+                  ></Button>
                 )}
-
               </div>
               {errorMessage && (
-        <span className={cn('text-red-500 text-xs mt-1', errorMessageClassName)}>
+                <span className={cn('text-red-500 text-xs mt-1', errorMessageClassName)}>
                   {errorMessage}
                 </span>
               )}
@@ -135,3 +133,4 @@ export const InputField = ({
     </div>
   );
 };
+

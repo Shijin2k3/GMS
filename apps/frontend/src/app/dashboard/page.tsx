@@ -1,5 +1,5 @@
-import Dashboard from "@components/dashboard/DashBoard";
-import { Metadata } from "next";
+import { Dashboard } from '@/features/members/components/DashBoard';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Dashboard',
