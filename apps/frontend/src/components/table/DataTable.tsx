@@ -13,10 +13,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@components/ui/table';
-import { Button } from '@components/ui/button';
+} from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
 import { useMemo } from 'react';
-import { Icon } from '@components/atoms/Icon/Icon';
+import { Icon } from '@/components/atoms/Icon/Icon';
 
 export type TableAction<T> = {
   type: 'view' | 'edit' | 'delete';
@@ -122,3 +122,4 @@ export function DataTable<TData, TValue>({
     </div>
   );
 }
+

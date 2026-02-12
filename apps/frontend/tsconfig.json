@@ -10,13 +10,20 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-  "paths": {
-     "@components/*": ["apps/frontend/src/components/*"],
-     "@atoms/*": ["apps/frontend/src/components/atoms/*"],
-      "@hooks/*": ["apps/frontend/src/hooks/*"],
-      "@services/*": ["apps/frontend/src/services/*"],
-      "@helpers/*": ["apps/frontend/src/helpers/*"],
-      "@types/*": ["apps/frontend/src/types/*"],
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"],
+      "@/atoms/*": ["./components/atoms/*"],
+      "@/hooks/*": ["./hooks/*"],
+      "@/services/*": ["./services/*"],
+      "@/helpers/*": ["./helpers/*"],
+      "@/types/*": ["./types/*"],
+      "@types": ["./types"],
+      "@/features/*": ["./features/*"],
+      "@lib/*": ["./lib/*"],
+      "@lib": ["./lib"],
+      "@components/*": ["./components/*"],
+      "@components": ["./components"]
     },
     "lib": [
       "dom",
@@ -38,8 +45,6 @@
     "**/*.jsx",
     "**/*.ts",
     "**/*.tsx",
-    "../../apps/frontend/.next/types/**/*.ts",
-    "../../dist/apps/frontend/.next/types/**/*.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
   ],

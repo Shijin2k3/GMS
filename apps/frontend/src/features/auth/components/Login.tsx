@@ -1,16 +1,19 @@
 'use client';
 
-import { Button } from '@components/atoms/Button/button';
-import { InputField } from '@components/atoms/Input/InputField';
+import { Button } from '@/components/atoms/Button/button';
+import { InputField } from '@/components/atoms/Input/InputField';
 import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
+import { authService } from '../services/auth.service';
+import { useMutation } from '@tanstack/react-query';
+import { handleLoginProxy } from '@/services/proxy';
 
 type LoginFormValues = {
   email: string;
   password: string;
 };
 
-export default function Login() {
+export function Login() {
   const router = useRouter();
 
   const methods = useForm<LoginFormValues>();
@@ -21,26 +24,26 @@ export default function Login() {
     setError,
   } = methods;
 
-  const onSubmit = (data: LoginFormValues) => {
-    const { email, password } = data;
+  const { mutate: login, isPending } = useMutation({
+    mutationFn: (data: LoginFormValues) => handleLoginProxy(data, router),
+    onSuccess: (result: any) => {
+      if (!result.success) {
+        setError('root', {
+          type: 'manual',
+          message: result.message,
+        });
+      }
+    },
+  });
 
-    if (email === 'admin@gmail.com' && password === '123456') {
-      document.cookie = `token=test_token; path=/;`;
-      router.push('/dashboard');
-    } else {
-      setError('root', {
-        type: 'manual',
-        message: 'Invalid credentials',
-      });
-    }
+  const onSubmit = (data: LoginFormValues) => {
+    login(data);
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
       <div className="bg-white w-full max-w-md p-8 rounded-xl shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-6 text-gray-900">
-          Login
-        </h2>
+        <h2 className="text-2xl font-bold text-center mb-6 text-gray-900">Login</h2>
 
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -54,20 +57,19 @@ export default function Login() {
             <InputField
               name="password"
               label="Password"
-              type='password'
+              type="password"
               rules={{ required: 'Password is required' }}
               isRequired
             />
 
             {errors.root && (
-              <p className="text-red-500 text-sm text-center">
-                {errors.root.message}
-              </p>
+              <p className="text-red-500 text-sm text-center">{errors.root.message}</p>
             )}
 
             <Button
-              label="Login"
+              label={isPending ? 'Logging in...' : 'Login'}
               type="submit"
+              disabled={isPending}
               className="w-full bg-blue-500 py-2 rounded-lg hover:bg-blue-600 transition-colors"
             />
           </form>

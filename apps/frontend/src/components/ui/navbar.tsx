@@ -1,8 +1,8 @@
 'use client';
 
-import { Button } from '@components/atoms/Button/button';
+import { Button } from '@/components/atoms/Button/button';
 import { useRouter, usePathname } from 'next/navigation';
-import { cn } from 'apps/frontend/lib';
+import { cn } from '@lib';
 
 export default function Navbar() {
   const router = useRouter();
@@ -21,8 +21,7 @@ export default function Navbar() {
           <h1
             className={cn(
               'text-xl font-semibold tracking-wide px-4 py-1 rounded-lg transition-all',
-              isDashboard &&
-                'ring-2 ring-emerald-400 ring-offset-2 ring-offset-slate-900'
+              isDashboard && 'ring-2 ring-emerald-400 ring-offset-2 ring-offset-slate-900',
             )}
           >
             {isDashboard ? 'Members' : 'Dashboard'}
@@ -37,3 +36,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

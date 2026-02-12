@@ -1,10 +1,13 @@
-  'use client';
+'use client';
 
-import Navbar from '@components/ui/navbar';
-import { DataTable, TableAction } from '@components/table/DataTable';
+import Navbar from '@/components/ui/navbar';
+import { DataTable, TableAction } from '@/components/table/DataTable';
 import { ColumnDef } from '@tanstack/react-table';
+import { useQuery } from '@tanstack/react-query';
+import { memberService } from '../services/member.service';
 
 type UserRow = {
+  id: string;
   firstName: string;
   lastName: string;
   gender: string;
@@ -14,7 +17,12 @@ type UserRow = {
   status: string;
 };
 
-export default function Dashboard() {
+export function Dashboard() {
+  const { data: members, isLoading } = useQuery({
+    queryKey: ['members'],
+    queryFn: () => memberService.findAll(),
+  });
+
   const columns: ColumnDef<UserRow>[] = [
     { accessorKey: 'firstName', header: 'First Name' },
     { accessorKey: 'gender', header: 'Gender' },
@@ -24,26 +32,7 @@ export default function Dashboard() {
     { accessorKey: 'status', header: 'Status' },
   ];
 
-  const mockData: UserRow[] = [
-    {
-      firstName: 'John',
-      lastName: 'Doe',
-      gender: 'MALE',
-      mobileNo: '1234567890',
-      email: 'john@example.com',
-      joinDate: '2023-01-01',
-      status: 'ACTIVE',
-    },
-    {
-      firstName: 'Jane',
-      lastName: 'Smith',
-      gender: 'FEMALE',
-      mobileNo: '0987654321',
-      email: 'jane@example.com',
-      joinDate: '2023-02-01',
-      status: 'ACTIVE',
-    },
-  ];
+  const data = (members as any)?.data || [];
 
   const actions: TableAction<UserRow>[] = [
     {
@@ -74,16 +63,17 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <div className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">
-          Welcome to the Dashboard
-        </h2>
+        <h2 className="text-2xl font-bold mb-4">Welcome to the Dashboard</h2>
 
-        <DataTable
-          columns={columns}
-          data={mockData}
-          actions={actions}
-        />
+        {isLoading ? (
+          <div className="flex items-center justify-center h-64">
+            <p className="text-gray-500">Loading members...</p>
+          </div>
+        ) : (
+          <DataTable columns={columns} data={data} actions={actions} />
+        )}
       </div>
     </div>
   );
 }
+

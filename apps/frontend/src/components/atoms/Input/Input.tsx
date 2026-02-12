@@ -1,26 +1,16 @@
 import * as React from 'react';
 import { IconNames } from '../Icon/icon.type';
 import { Icon } from '../Icon/Icon';
-import { cn } from 'apps/frontend/lib';
+import { cn } from '@lib';
+import { forwardRef } from 'react';
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   iconName?: IconNames;
   iconPosition?: 'start' | 'end';
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      className,
-      type,
-      iconName,
-      placeholder,
-      iconPosition = 'start',
-      ...props
-    },
-    ref,
-  ) => {
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, iconName, placeholder, iconPosition = 'start', ...props }, ref) => {
     return (
       <div className="relative flex items-center ">
         {iconName && (
@@ -51,3 +41,4 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 Input.displayName = 'Input';
 
 export { Input };
+

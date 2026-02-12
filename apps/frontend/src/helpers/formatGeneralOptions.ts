@@ -46,3 +46,4 @@ export const formatGeneral = (
 
     return formattedValue;
 };
+
