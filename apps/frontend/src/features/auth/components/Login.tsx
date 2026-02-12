@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 import { authService } from '../services/auth.service';
 import { useMutation } from '@tanstack/react-query';
+import { handleLoginProxy } from '@/services/proxy';
 
 type LoginFormValues = {
   email: string;
@@ -24,15 +25,12 @@ export function Login() {
   } = methods;
 
   const { mutate: login, isPending } = useMutation({
-    mutationFn: (data: LoginFormValues) => authService.login(data),
-    onSuccess: (response: any) => {
-      if (response?.data?.result?.accessToken) {
-        document.cookie = `token=${response.data.result.accessToken}; path=/;`;
-        router.push('/dashboard');
-      } else {
+    mutationFn: (data: LoginFormValues) => handleLoginProxy(data, router),
+    onSuccess: (result: any) => {
+      if (!result.success) {
         setError('root', {
           type: 'manual',
-          message: response.data.message,
+          message: result.message,
         });
       }
     },
@@ -80,4 +78,3 @@ export function Login() {
     </div>
   );
 }
-
