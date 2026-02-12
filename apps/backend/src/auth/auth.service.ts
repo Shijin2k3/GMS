@@ -1,9 +1,5 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { PrismaService } from '@prisma';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { PrismaService } from '@app/prisma';
 import { LoginDto, SignUpDto } from './dto';
 import { UserStatus } from '@prisma/client';
 import { hashPassword, verifyPassword } from '@helper/utils';
@@ -15,7 +11,7 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
-    private readonly config: ConfigService
+    private readonly config: ConfigService,
   ) {}
 
   async signup(dto: SignUpDto) {
@@ -71,10 +67,9 @@ export class AuthService {
           email: email,
         },
         {
-          expiresIn:
-            Number(this.config.get<number>('ACCESS_TOKEN_EXPIRY')) || 86400,
+          expiresIn: Number(this.config.get<number>('ACCESS_TOKEN_EXPIRY')) || 86400,
           secret: this.config.get<string>('ACCESS_TOKEN_SECRET'),
-        }
+        },
       ),
       this.jwtService.signAsync(
         {
@@ -82,10 +77,9 @@ export class AuthService {
           email: email,
         },
         {
-          expiresIn:
-            Number(this.config.get<number>('REFRESH_TOKEN_EXPIRY')) || 2592000,
+          expiresIn: Number(this.config.get<number>('REFRESH_TOKEN_EXPIRY')) || 2592000,
           secret: this.config.get<string>('REFRESH_TOKEN_SECRET'),
-        }
+        },
       ),
     ]);
     return {

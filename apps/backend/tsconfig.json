@@ -14,8 +14,8 @@
     "esModuleInterop": true,
     "baseUrl":"./src",
     "paths":{
-       "@prisma": ["prisma"],
-       "@prisma/*": ["prisma/*"],
+       "@app/prisma": ["prisma"],
+       "@app/prisma/*": ["prisma/*"],
        "@helper":["helper"],
        "@helper/*":["helper/*"],
        "@enums":["enums"],

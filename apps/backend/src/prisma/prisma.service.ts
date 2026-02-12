@@ -4,10 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { paginationExtension } from './extension';
 
 @Injectable()
-export class PrismaService
-  extends PrismaClient
-  implements OnModuleInit, OnModuleDestroy
-{
+export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
   constructor(config: ConfigService) {
     const url = config.get<string>('DATABASE_URL') || process.env.DATABASE_URL;
     super({
@@ -16,7 +13,7 @@ export class PrismaService
           url,
         },
       },
-    });
+    } as any);
   }
   async onModuleInit() {
     await this.$connect();

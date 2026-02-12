@@ -7,22 +7,16 @@ import {
   InternalServerErrorException,
   Logger,
 } from '@nestjs/common';
-import {
-  PrismaClientKnownRequestError,
-  PrismaClientInitializationError,
-  PrismaClientValidationError,
-  PrismaClientRustPanicError,
-  PrismaClientUnknownRequestError,
-} from '@prisma/client/runtime/library';
+import { Prisma } from '@prisma/client';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 type ExceptionInstance =
-  | PrismaClientKnownRequestError
+  | Prisma.PrismaClientKnownRequestError
   | HttpException
-  | PrismaClientValidationError
-  | PrismaClientInitializationError
-  | PrismaClientRustPanicError
-  | PrismaClientUnknownRequestError
+  | Prisma.PrismaClientValidationError
+  | Prisma.PrismaClientInitializationError
+  | Prisma.PrismaClientRustPanicError
+  | Prisma.PrismaClientUnknownRequestError
   | Error;
 
 @Catch()
@@ -67,11 +61,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
   isPrismaError(error: ExceptionInstance): boolean {
     return (
-      error instanceof PrismaClientKnownRequestError ||
-      error instanceof PrismaClientUnknownRequestError ||
-      error instanceof PrismaClientValidationError ||
-      error instanceof PrismaClientInitializationError ||
-      error instanceof PrismaClientRustPanicError
+      error instanceof Prisma.PrismaClientKnownRequestError ||
+      error instanceof Prisma.PrismaClientUnknownRequestError ||
+      error instanceof Prisma.PrismaClientValidationError ||
+      error instanceof Prisma.PrismaClientInitializationError ||
+      error instanceof Prisma.PrismaClientRustPanicError
     );
   }
 }

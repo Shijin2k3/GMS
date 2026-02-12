@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaService } from '@prisma';
+import { PrismaService } from '@app/prisma';
 import { CreateMemberDto, UpdateMemberDto } from './dto';
 import { buildPrismaQueryParamsAndSort, PaginationQueryDto } from '@helper';
 import { MemberStatus } from '@prisma/client';

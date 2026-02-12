@@ -5,22 +5,16 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import {
-  PrismaClientKnownRequestError,
-  PrismaClientInitializationError,
-  PrismaClientValidationError,
-  PrismaClientRustPanicError,
-  PrismaClientUnknownRequestError,
-} from '@prisma/client/runtime/library';
+import { Prisma } from '@prisma/client';
 
 export function prismaErrorHandler(error: unknown) {
-  if (error instanceof PrismaClientKnownRequestError) {
-    switch (error?.code) {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    switch (error.code) {
       case 'P2000':
         return new BadRequestException('Input value is too long.');
       case 'P2002':
         return new ConflictException(
-          `Unique constraint failed on the field(s): ${error?.meta?.target}`
+          `Unique constraint failed on the field(s): ${error.meta?.target}`,
         );
       case 'P2003':
         return new BadRequestException('Foreign key constraint failed.');
@@ -31,27 +25,19 @@ export function prismaErrorHandler(error: unknown) {
       case 'P2004':
         return new UnauthorizedException('Database constraint violation.');
       default:
-        return new InternalServerErrorException(
-          `Prisma error: ${error?.message}`
-        );
+        return new InternalServerErrorException(`Prisma error: ${error.message}`);
     }
-  } else if (error instanceof PrismaClientValidationError) {
+  } else if (error instanceof Prisma.PrismaClientValidationError) {
     return new BadRequestException('Invalid input data.');
-  } else if (error instanceof PrismaClientInitializationError) {
+  } else if (error instanceof Prisma.PrismaClientInitializationError) {
     return new InternalServerErrorException(
-      'Database initialization failed. Check connection settings.'
+      'Database initialization failed. Check connection settings.',
     );
-  } else if (error instanceof PrismaClientRustPanicError) {
-    return new InternalServerErrorException(
-      'Unexpected database crash. Prisma panicked.'
-    );
-  } else if (error instanceof PrismaClientUnknownRequestError) {
-    return new InternalServerErrorException(
-      'Unknown database request error occurred.'
-    );
+  } else if (error instanceof Prisma.PrismaClientRustPanicError) {
+    return new InternalServerErrorException('Unexpected database crash. Prisma panicked.');
+  } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
+    return new InternalServerErrorException('Unknown database request error occurred.');
   } else {
-    return new InternalServerErrorException(
-      'An unexpected database error occurred.'
-    );
+    return new InternalServerErrorException('An unexpected database error occurred.');
   }
 }
