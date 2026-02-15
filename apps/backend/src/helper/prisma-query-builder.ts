@@ -8,7 +8,7 @@ export type PrismaWhereQueryParams = {
     | Date
     | { in: (string | number)[] }
     | { notIn: (string | number)[] }
-    | { contains: string }
+    | { contains: string; mode: 'insesitive' }
     | { startsWith: string }
     | { endsWith: string }
     | { gt: string | number | Date }
@@ -172,13 +172,13 @@ const buildPrismaMatchModeCondition = (
   let leafCondition: any;
   switch (matchMode) {
     case 'contains':
-      leafCondition = { contains: processedValue as string };
+      leafCondition = { contains: processedValue as string, mode: 'insesitive' };
       break;
     case 'startsWith':
-      leafCondition = { startsWith: processedValue as string };
+      leafCondition = { startsWith: processedValue as string, mode: 'insesitive' };
       break;
     case 'endsWith':
-      leafCondition = { endsWith: processedValue as string };
+      leafCondition = { endsWith: processedValue as string, mode: 'insesitive' };
       break;
     case 'gt':
       leafCondition = { gt: processedValue };
@@ -196,10 +196,10 @@ const buildPrismaMatchModeCondition = (
       leafCondition = { not: null };
       break;
     case 'isNull':
-      leafCondition = { equals: null };
+      leafCondition = { equals: null, mode: 'insesitive' };
       break;
     default:
-      leafCondition = { equals: processedValue };
+      leafCondition = { equals: processedValue, mode: 'insesitive' };
   }
 
   return createNestedObject(colName, leafCondition);
