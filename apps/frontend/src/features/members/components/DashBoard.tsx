@@ -3,8 +3,7 @@
 import Navbar from '@/components/ui/navbar';
 import { DataTable, TableAction } from '@/components/table/DataTable';
 import { ColumnDef } from '@tanstack/react-table';
-import { useQuery } from '@tanstack/react-query';
-import { memberService } from '../services/member.service';
+import { useMembers } from '../hooks/useMembers';
 
 type UserRow = {
   id: string;
@@ -18,10 +17,7 @@ type UserRow = {
 };
 
 export function Dashboard() {
-  const { data: members, isLoading } = useQuery({
-    queryKey: ['members'],
-    queryFn: () => memberService.findAll(),
-  });
+  const { data: members, isLoading } = useMembers();
 
   const columns: ColumnDef<UserRow>[] = [
     { accessorKey: 'firstName', header: 'First Name' },
@@ -76,4 +72,3 @@ export function Dashboard() {
     </div>
   );
 }
-

@@ -7,7 +7,7 @@ const Table = forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement
     <div className="relative w-full overflow-auto">
       <table ref={ref} className={cn('w-full caption-bottom text-sm', className)} {...props} />
     </div>
-  ),
+  )
 );
 Table.displayName = 'Table';
 
@@ -45,11 +45,11 @@ const TableRow = forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableR
       ref={ref}
       className={cn(
         'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
-        className,
+        className
       )}
       {...props}
     />
-  ),
+  )
 );
 TableRow.displayName = 'TableRow';
 
@@ -59,11 +59,11 @@ const TableHead = forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTa
       ref={ref}
       className={cn(
         'h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0',
-        className,
+        className
       )}
       {...props}
     />
-  ),
+  )
 );
 TableHead.displayName = 'TableHead';
 
@@ -74,7 +74,7 @@ const TableCell = forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTa
       className={cn('p-4 align-middle [&:has([role=checkbox])]:pr-0', className)}
       {...props}
     />
-  ),
+  )
 );
 TableCell.displayName = 'TableCell';
 
@@ -87,4 +87,3 @@ const TableCaption = forwardRef<
 TableCaption.displayName = 'TableCaption';
 
 export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };
-

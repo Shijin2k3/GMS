@@ -33,7 +33,7 @@ export const Button = ({
         className={cn(
           'flex items-center text-lg font-bold',
           iconPosition === 'start' ? 'gap-2' : 'gap-2 flex-row-reverse',
-          contentClassName,
+          contentClassName
         )}
       >
         {icon && <Icon icon={icon} className={iconClassName} />}
@@ -43,4 +43,3 @@ export const Button = ({
     </ShadCnButton>
   );
 };
-

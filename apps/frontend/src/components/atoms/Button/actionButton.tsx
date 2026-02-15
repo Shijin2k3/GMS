@@ -50,7 +50,7 @@ const ActionButtons = <T,>({ id, actions, data, className }: ActionButtonsProps<
               aria-label={action.type}
               className={cn(
                 'rounded-full transition-colors',
-                disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-pink-600',
+                disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-pink-600'
               )}
             >
               <Icon icon={action.iconName} iconColor="white" className="h-4 w-4" />
@@ -63,4 +63,3 @@ const ActionButtons = <T,>({ id, actions, data, className }: ActionButtonsProps<
 };
 
 export default memo(ActionButtons);
-

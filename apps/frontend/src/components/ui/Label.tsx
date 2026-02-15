@@ -5,7 +5,7 @@ import { cn } from '@lib';
 import { forwardRef } from 'react';
 
 const labelVariants = cva(
-  'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+  'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
 );
 
 const Label = forwardRef<
@@ -17,4 +17,3 @@ const Label = forwardRef<
 Label.displayName = LabelPrimitive.Root.displayName;
 
 export { Label };
-

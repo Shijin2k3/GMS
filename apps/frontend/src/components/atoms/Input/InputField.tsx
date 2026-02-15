@@ -95,7 +95,7 @@ export const InputField = ({
                       : iconName && iconPosition === 'start'
                       ? 'pl-10'
                       : '',
-                    inputClassName,
+                    inputClassName
                   )}
                   type={showPassword ? 'text' : type}
                 />
@@ -133,4 +133,3 @@ export const InputField = ({
     </div>
   );
 };
-

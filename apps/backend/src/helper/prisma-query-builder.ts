@@ -57,7 +57,7 @@ export const buildPrismaQueryParamsAndSort = (
     colName: string;
     matchMode?: string;
     enumValues?: string[];
-  }[],
+  }[]
 ): {
   where: PrismaWhereQueryParams;
   orderBy: PrismaSortQuery;
@@ -94,7 +94,7 @@ export const buildPrismaQueryParamsAndSort = (
 };
 
 export const buildPrismaQueryParams = (
-  filterParams: PaginationQueryParamDto[],
+  filterParams: PaginationQueryParamDto[]
 ): PrismaWhereQueryParams => {
   const AND: PrismaWhereQueryParams[] = [];
   const OR: PrismaWhereQueryParams[] = [];
@@ -148,7 +148,7 @@ const buildPrismaMatchModeCondition = (
   colName: string,
   value: string | number,
   matchMode?: string,
-  enumValues?: string[],
+  enumValues?: string[]
 ): PrismaWhereQueryParams => {
   let processedValue = value;
 
@@ -163,7 +163,7 @@ const buildPrismaMatchModeCondition = (
   if (enumValues && typeof processedValue === 'string') {
     // Filter enum values for partial match
     const matches = enumValues.filter((val) =>
-      val.toLowerCase().includes((processedValue as string).toLowerCase()),
+      val.toLowerCase().includes((processedValue as string).toLowerCase())
     );
     if (matches.length) return createNestedObject(colName, { in: matches });
     return null;
@@ -207,7 +207,7 @@ const buildPrismaMatchModeCondition = (
 
 const buildPrismaDateCondition = (
   colName: string,
-  value: string | number,
+  value: string | number
 ): PrismaWhereQueryParams => {
   const dateValue = new Date(value);
   if (isNaN(dateValue.getTime())) {

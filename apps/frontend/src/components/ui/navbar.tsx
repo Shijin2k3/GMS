@@ -21,7 +21,7 @@ export default function Navbar() {
           <h1
             className={cn(
               'text-xl font-semibold tracking-wide px-4 py-1 rounded-lg transition-all',
-              isDashboard && 'ring-2 ring-emerald-400 ring-offset-2 ring-offset-slate-900',
+              isDashboard && 'ring-2 ring-emerald-400 ring-offset-2 ring-offset-slate-900'
             )}
           >
             {isDashboard ? 'Members' : 'Dashboard'}
@@ -36,4 +36,3 @@ export default function Navbar() {
     </nav>
   );
 }
-

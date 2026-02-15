@@ -32,10 +32,7 @@ export class FormatQueryFilterInterceptor implements NestInterceptor {
         params = JSON.parse(formattedQueryParams);
         return params;
       } catch (error) {
-        throw new HttpException(
-          'Invalid queryParams format',
-          HttpStatus.BAD_REQUEST
-        );
+        throw new HttpException('Invalid queryParams format', HttpStatus.BAD_REQUEST);
       }
     }
   }

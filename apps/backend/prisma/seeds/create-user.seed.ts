@@ -24,6 +24,6 @@ export const seedUser = async (prisma: PrismaClient) => {
         },
       });
       return createdUser;
-    }),
+    })
   );
 };

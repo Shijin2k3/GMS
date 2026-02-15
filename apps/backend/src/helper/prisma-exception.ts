@@ -31,9 +31,7 @@ export function prismaErrorHandler(error: unknown) {
       case 'P2004':
         return new UnauthorizedException('Database constraint violation.');
       default:
-        return new InternalServerErrorException(
-          `Prisma error: ${error?.message}`
-        );
+        return new InternalServerErrorException(`Prisma error: ${error?.message}`);
     }
   } else if (error instanceof PrismaClientValidationError) {
     return new BadRequestException('Invalid input data.');
@@ -42,16 +40,10 @@ export function prismaErrorHandler(error: unknown) {
       'Database initialization failed. Check connection settings.'
     );
   } else if (error instanceof PrismaClientRustPanicError) {
-    return new InternalServerErrorException(
-      'Unexpected database crash. Prisma panicked.'
-    );
+    return new InternalServerErrorException('Unexpected database crash. Prisma panicked.');
   } else if (error instanceof PrismaClientUnknownRequestError) {
-    return new InternalServerErrorException(
-      'Unknown database request error occurred.'
-    );
+    return new InternalServerErrorException('Unknown database request error occurred.');
   } else {
-    return new InternalServerErrorException(
-      'An unexpected database error occurred.'
-    );
+    return new InternalServerErrorException('An unexpected database error occurred.');
   }
 }
