@@ -17,7 +17,7 @@ async function bootstrap() {
     new ValidationPipe({
       transform: true,
       whitelist: true,
-    }),
+    })
   );
   app.useGlobalInterceptors(new ResponseInterceptor());
   app.useGlobalFilters(new HttpExceptionFilter());
@@ -46,7 +46,7 @@ async function bootstrap() {
   await app.listen(port, '0.0.0.0');
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`,
-    `🚀 Application is running on: http://localhost:${port}/swagger`,
+    `🚀 Application is running on: http://localhost:${port}/swagger`
   );
 }
 

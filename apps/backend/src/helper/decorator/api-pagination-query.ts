@@ -25,8 +25,7 @@ export function ApiPaginationQuery() {
       name: 'globalSearch',
       type: String,
       required: false,
-      description:
-        'Search across beneficiaryName, beneficiaryEmail, country, etc.',
+      description: 'Search across beneficiaryName, beneficiaryEmail, country, etc.',
       example: 'david',
     })
   );

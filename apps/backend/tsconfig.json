@@ -12,14 +12,14 @@
   ],
   "compilerOptions": {
     "esModuleInterop": true,
-    "baseUrl":"./src",
-    "paths":{
-       "@prisma": ["prisma"],
-       "@prisma/*": ["prisma/*"],
-       "@helper":["helper"],
-       "@helper/*":["helper/*"],
-       "@enums":["enums"],
-       "@enums/*":["enums/*"]
+    "baseUrl": "./src",
+    "paths": {
+      "@prisma": ["prisma"],
+      "@prisma/*": ["prisma/*"],
+      "@helper": ["helper"],
+      "@helper/*": ["helper/*"],
+      "@enums": ["enums"],
+      "@enums/*": ["enums/*"]
     }
   }
 }

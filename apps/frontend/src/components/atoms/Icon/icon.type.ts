@@ -503,4 +503,3 @@ export const IconTypeMap = {
     default: faCloudArrowDown,
   },
 };
-

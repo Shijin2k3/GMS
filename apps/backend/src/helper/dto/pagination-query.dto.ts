@@ -72,8 +72,7 @@ export class PaginationQueryParamDto {
   @IsOptional()
   @IsIn(['AND', 'OR'])
   @ApiPropertyOptional({
-    description:
-      'AND: all conditions must match, OR: at least one condition must match',
+    description: 'AND: all conditions must match, OR: at least one condition must match',
   })
   operation?: 'AND' | 'OR';
 }

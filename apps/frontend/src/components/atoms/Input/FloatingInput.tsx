@@ -33,7 +33,7 @@ const FloatingLabel = forwardRef<
           'peer-not-placeholder-shown:top-2 peer-not-placeholder-shown:text-xs',
         ],
         'bg-background px-1',
-        className,
+        className
       )}
     />
   );
@@ -64,4 +64,3 @@ const FloatingLabelInput = forwardRef<
 FloatingLabelInput.displayName = 'FloatingLabelInput';
 
 export { FloatingInput, FloatingLabel, FloatingLabelInput };
-

@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '@prisma';
 import { LoginDto, SignUpDto } from './dto';
 import { UserStatus } from '@prisma/client';
@@ -71,8 +67,7 @@ export class AuthService {
           email: email,
         },
         {
-          expiresIn:
-            Number(this.config.get<number>('ACCESS_TOKEN_EXPIRY')) || 86400,
+          expiresIn: Number(this.config.get<number>('ACCESS_TOKEN_EXPIRY')) || 86400,
           secret: this.config.get<string>('ACCESS_TOKEN_SECRET'),
         }
       ),
@@ -82,8 +77,7 @@ export class AuthService {
           email: email,
         },
         {
-          expiresIn:
-            Number(this.config.get<number>('REFRESH_TOKEN_EXPIRY')) || 2592000,
+          expiresIn: Number(this.config.get<number>('REFRESH_TOKEN_EXPIRY')) || 2592000,
           secret: this.config.get<string>('REFRESH_TOKEN_SECRET'),
         }
       ),

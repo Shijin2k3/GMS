@@ -2,11 +2,8 @@
 
 import { Button } from '@/components/atoms/Button/button';
 import { InputField } from '@/components/atoms/Input/InputField';
-import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
-import { authService } from '../services/auth.service';
-import { useMutation } from '@tanstack/react-query';
-import { handleLoginProxy } from '@/services/proxy';
+import { useLogin } from '../hooks/useAuth';
 
 type LoginFormValues = {
   email: string;
@@ -14,8 +11,6 @@ type LoginFormValues = {
 };
 
 export function Login() {
-  const router = useRouter();
-
   const methods = useForm<LoginFormValues>();
 
   const {
@@ -24,20 +19,17 @@ export function Login() {
     setError,
   } = methods;
 
-  const { mutate: login, isPending } = useMutation({
-    mutationFn: (data: LoginFormValues) => handleLoginProxy(data, router),
-    onSuccess: (result: any) => {
-      if (!result.success) {
-        setError('root', {
-          type: 'manual',
-          message: result.message,
-        });
-      }
-    },
-  });
+  const { mutate: login, isPending } = useLogin();
 
   const onSubmit = (data: LoginFormValues) => {
-    login(data);
+    login(data, {
+      onError: (error: any) => {
+        setError('root', {
+          type: 'manual',
+          message: error.message || 'Login failed',
+        });
+      },
+    });
   };
 
   return (

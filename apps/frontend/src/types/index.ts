@@ -1,1 +1,1 @@
-export * from './atoms.type'
+export * from './atoms.type';

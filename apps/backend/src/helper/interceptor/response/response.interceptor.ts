@@ -1,9 +1,4 @@
-import {
-  CallHandler,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-} from '@nestjs/common';
+import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { FastifyReply } from 'fastify';
 import { map, Observable } from 'rxjs';
 
@@ -20,18 +15,10 @@ export class ResponseInterceptor implements NestInterceptor {
          apiResult =>custom main payload of the response (object or array)
         */
 
-        const {
-          responseMessage = 'Success',
-          apiResult,
-          ...resultData
-        } = data || {};
+        const { responseMessage = 'Success', apiResult, ...resultData } = data || {};
 
         const result =
-          apiResult !== undefined
-            ? apiResult
-            : Array.isArray(data)
-            ? data
-            : resultData || {};
+          apiResult !== undefined ? apiResult : Array.isArray(data) ? data : resultData || {};
 
         return {
           status: response.statusCode,
