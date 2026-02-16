@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -26,9 +26,9 @@ model Users {
   mobileNo  String?    @map("mobile_no")
   gender    Gender?    @map("gender")
   status    UserStatus @default(ACTIVE) @map("status")
-  createdAt DateTime   @default(now()) @map("created_at") @db.DateTime(0)
-  updatedAt DateTime   @updatedAt @map("updated_at") @db.DateTime(0)
-  deletedAt DateTime?  @map("deleted_at") @db.DateTime(0)
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  deletedAt DateTime?  @map("deleted_at")
   members   Member[]
 
   @@index([name])
@@ -46,9 +46,9 @@ model Member {
   joinDate  DateTime     @default(now()) @map("join_date")
   status    MemberStatus @default(ACTIVE) @map("status")
   payments  Payment[]
-  createdAt DateTime     @default(now()) @map("created_at") @db.DateTime(0)
-  updatedAt DateTime     @updatedAt @map("updated_at") @db.DateTime(0)
-  deletedAt DateTime?    @map("deleted_at") @db.DateTime(0)
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("updated_at")
+  deletedAt DateTime?    @map("deleted_at")
   users     Users?       @relation(fields: [userId], references: [userId])
 
   @@index([userId])
@@ -63,9 +63,9 @@ model Payment {
   paymentMethod PaymentMethod @map("payment_method")
   paymentStatus PaymentStatus @map("payment_status")
   member        Member        @relation(fields: [memberId], references: [id])
-  createdAt     DateTime      @default(now()) @map("created_at") @db.DateTime(0)
-  updatedAt     DateTime      @updatedAt @map("updated_at") @db.DateTime(0)
-  deletedAt     DateTime?     @map("deleted_at") @db.DateTime(0)
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  deletedAt     DateTime?     @map("deleted_at")
 
   @@index([memberId])
   @@map("payment")
@@ -77,9 +77,9 @@ model Expense {
   description String?         @map("description")
   amount      Float           @map("amount")
   expenseDate DateTime        @default(now()) @map("expense_date")
-  createdAt   DateTime        @default(now()) @map("created_at") @db.DateTime(0)
-  updatedAt   DateTime        @updatedAt @map("updated_at") @db.DateTime(0)
-  deletedAt   DateTime?       @map("deleted_at") @db.DateTime(0)
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime        @updatedAt @map("updated_at")
+  deletedAt   DateTime?       @map("deleted_at")
 
   @@map("expense")
 }
