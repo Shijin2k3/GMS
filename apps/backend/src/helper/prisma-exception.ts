@@ -5,16 +5,10 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import {
-  PrismaClientKnownRequestError,
-  PrismaClientInitializationError,
-  PrismaClientValidationError,
-  PrismaClientRustPanicError,
-  PrismaClientUnknownRequestError,
-} from '@prisma/client/runtime/library';
+import { Prisma } from '@prisma/client';
 
 export function prismaErrorHandler(error: unknown) {
-  if (error instanceof PrismaClientKnownRequestError) {
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
     switch (error?.code) {
       case 'P2000':
         return new BadRequestException('Input value is too long.');
@@ -33,15 +27,15 @@ export function prismaErrorHandler(error: unknown) {
       default:
         return new InternalServerErrorException(`Prisma error: ${error?.message}`);
     }
-  } else if (error instanceof PrismaClientValidationError) {
+  } else if (error instanceof Prisma.PrismaClientValidationError) {
     return new BadRequestException('Invalid input data.');
-  } else if (error instanceof PrismaClientInitializationError) {
+  } else if (error instanceof Prisma.PrismaClientInitializationError) {
     return new InternalServerErrorException(
       'Database initialization failed. Check connection settings.'
     );
-  } else if (error instanceof PrismaClientRustPanicError) {
+  } else if (error instanceof Prisma.PrismaClientRustPanicError) {
     return new InternalServerErrorException('Unexpected database crash. Prisma panicked.');
-  } else if (error instanceof PrismaClientUnknownRequestError) {
+  } else if (error instanceof Prisma.PrismaClientUnknownRequestError) {
     return new InternalServerErrorException('Unknown database request error occurred.');
   } else {
     return new InternalServerErrorException('An unexpected database error occurred.');
