@@ -5,6 +5,7 @@ import { UserStatus } from '@prisma/client';
 import { hashPassword, verifyPassword } from '@helper/utils';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { TokenType } from '@enums';
 
 @Injectable()
 export class AuthService {
@@ -59,12 +60,32 @@ export class AuthService {
     };
   }
 
+  async refreshToken(userId: string) {
+    const user = await this.prisma.users.findUnique({
+      where: { userId },
+      select: {
+        email: true,
+      },
+    });
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    const { refreshToken, accessToken } = await this.getTokens(userId, user?.email);
+
+    return {
+      refreshToken,
+      accessToken,
+    };
+  }
+
   private async getTokens(userId: string, email: string) {
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(
         {
           userId: userId,
           email: email,
+          tokenType: TokenType.ACCESS_TOKEN,
         },
         {
           expiresIn: Number(this.config.get<number>('ACCESS_TOKEN_EXPIRY')) || 86400,
@@ -75,6 +96,7 @@ export class AuthService {
         {
           userId: userId,
           email: email,
+          tokenType: TokenType.REFRESH_TOKEN,
         },
         {
           expiresIn: Number(this.config.get<number>('REFRESH_TOKEN_EXPIRY')) || 2592000,
