@@ -13,22 +13,32 @@ datasource db {
 }
 
 model Users {
-  userId    String     @id @default(uuid()) @map("user_id")
-  name      String     @map("name")
-  email     String     @unique @map("email")
-  password  String     @map("password")
-  country   String?    @map("country")
-  state     String?    @map("state")
-  city      String?    @map("city")
-  address   String?    @map("address")
-  zipCode   String?    @map("zip_code")
-  mobileNo  String?    @map("mobile_no")
-  gender    Gender?    @map("gender")
-  status    UserStatus @default(ACTIVE) @map("status")
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  deletedAt DateTime?  @map("deleted_at")
-  members   Member[]
+  userId                        String                   @id @default(uuid()) @map("user_id")
+  name                          String                   @map("name")
+  email                         String                   @unique @map("email")
+  password                      String                   @map("password")
+  country                       String?                  @map("country")
+  state                         String?                  @map("state")
+  city                          String?                  @map("city")
+  address                       String?                  @map("address")
+  zipCode                       String?                  @map("zip_code")
+  mobileNo                      String?                  @map("mobile_no")
+  gender                        Gender?                  @map("gender")
+  status                        UserStatus               @default(ACTIVE) @map("status")
+  createdAt                     DateTime                 @default(now()) @map("created_at")
+  updatedAt                     DateTime                 @updatedAt @map("updated_at")
+  deletedAt                     DateTime?                @map("deleted_at")
+  members                       Member[]
+  createdMessagingEvent         MessagingEvent[]         @relation("createdByUser")
+  updatedMessagingEvent         MessagingEvent[]         @relation("updatedByUser")
+  createdMessagingTemplate      MessagingTemplate[]      @relation("createdByUser")
+  updatedMessagingTemplate      MessagingTemplate[]      @relation("updatedByUser")
+  createdMessagingChannelConfig MessagingChannelConfig[] @relation("createdByUser")
+  updatedMessagingChannelConfig MessagingChannelConfig[] @relation("updatedByUser")
+  createdMessagingProfile       MessagingProfile[]       @relation("createdByUser")
+  updatedMessagingProfile       MessagingProfile[]       @relation("updatedByUser")
+  createdMessagingLog           MessagingLog[]           @relation("createdByUser")
+  updatedMessagingLog           MessagingLog[]           @relation("updatedByUser")
 
   @@index([name])
   @@map("users")
@@ -81,6 +91,148 @@ model Expense {
   deletedAt   DateTime?       @map("deleted_at")
 
   @@map("expense")
+}
+
+model MessagingEvent {
+  id            String                @id @default(uuid()) @map("id")
+  key           MessagingEventKeyEnum @unique @map("key")
+  name          String?               @map("name")
+  description   String?               @map("description") @db.Text
+  templates     MessagingTemplate[]
+  createdAt     DateTime              @default(now()) @map("created_at")
+  updatedAt     DateTime              @updatedAt @map("updated_at")
+  updatedBy     String?               @map("updated_by")
+  createdBy     String?               @map("created_by")
+  updatedByUser Users?                @relation("updatedByUser", fields: [updatedBy], references: [userId])
+  createdByUser Users?                @relation("createdByUser", fields: [createdBy], references: [userId])
+
+  @@map("messaging_event")
+}
+
+model MessagingTemplate {
+  id            String           @id @default(uuid()) @map("id")
+  eventId       String           @map("event_id")
+  channel       MessagingChannel @map("channel")
+  title         String?          @map("title")
+  subject       String?          @map("subject") // email subject
+  body          String?          @map("body") @db.Text
+  cc            Json?            @map("cc")
+  bcc           Json?            @map("bcc")
+  active        Boolean          @default(true) @map("active")
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @updatedAt @map("updated_at")
+  deletedAt     DateTime?        @map("deleted_at") @db.Timestamp(0)
+  updatedBy     String?          @map("updated_by")
+  createdBy     String?          @map("created_by")
+  updatedByUser Users?           @relation("updatedByUser", fields: [updatedBy], references: [userId])
+  createdByUser Users?           @relation("createdByUser", fields: [createdBy], references: [userId])
+
+  event         MessagingEvent           @relation(fields: [eventId], references: [id])
+  channelConfig MessagingChannelConfig[]
+  messagingLog  MessagingLog[]
+
+  @@map("messaging_template")
+}
+
+model MessagingChannelConfig {
+  id         String              @id @default(uuid()) @map("id")
+  templateId String              @map("template_id")
+  channel    MessagingChannel    @map("channel")
+  enabled    Boolean             @default(true) @map("enabled")
+  profileId  String              @map("profile_id") // link to MessagingProfile (SMTP, Twilio, etc.)
+  priority   MessagePriorityEnum @default(MEDIUM) @map("priority")
+  options    Json?               @map("options") // channel-specific options
+  createdAt  DateTime            @default(now()) @map("created_at")
+  updatedAt  DateTime            @updatedAt @map("updated_at")
+
+  deletedAt     DateTime? @map("deleted_at") @db.Timestamp(0)
+  updatedBy     String?   @map("updated_by")
+  createdBy     String?   @map("created_by")
+  updatedByUser Users?    @relation("updatedByUser", fields: [updatedBy], references: [userId])
+  createdByUser Users?    @relation("createdByUser", fields: [createdBy], references: [userId])
+
+  template         MessagingTemplate @relation(fields: [templateId], references: [id])
+  messagingProfile MessagingProfile? @relation(fields: [profileId], references: [id])
+
+  @@unique([templateId, profileId, channel])
+  @@map("messaging_channel_config")
+}
+
+model MessagingProfile {
+  id            String               @id @default(uuid()) @map("id")
+  name          String               @map("name")
+  channel       MessagingChannel     @map("channel")
+  providerName  String               @map("provider_name") // "smtp", "twilio", "meta_whatsapp", etc
+  config        Json                 @map("config") // encrypted JSON blob
+  active        Boolean              @default(true) @map("active")
+  options       Json?                @map("options")
+  isDefault     Boolean              @default(false) @map("is_default")
+  priority      MessagePriorityEnum? @map("priority") // fallback ordering - lower = first
+  createdAt     DateTime             @default(now()) @map("created_at")
+  updatedAt     DateTime             @updatedAt @map("updated_at")
+  deletedAt     DateTime?            @map("deleted_at") @db.Timestamp(0)
+  updatedBy     String?              @map("updated_by")
+  createdBy     String?              @map("created_by")
+  updatedByUser Users?               @relation("updatedByUser", fields: [updatedBy], references: [userId])
+  createdByUser Users?               @relation("createdByUser", fields: [createdBy], references: [userId])
+
+  messages               MessagingLog[]
+  messagingChannelConfig MessagingChannelConfig[]
+
+  @@map("messaging_profile")
+}
+
+model MessagingLog {
+  id            String                 @id @default(uuid()) @map("id")
+  templateId    String?                @map("template_id")
+  channel       MessagingChannel       @map("channel")
+  profileId     String?                @map("profile_id")
+  to            String                 @map("to")
+  payload       Json                   @map("payload") // compiled payload (subject/html/text/body)
+  priority      MessagePriorityEnum    @default(MEDIUM) @map("priority")
+  status        MessagingLogStatusEnum @map("status")
+  attempts      Int                    @default(0) @map("attempts")
+  result        Json?                  @map("result")
+  error         String?                @map("error") @db.Text
+  scheduledAt   DateTime?              @map("scheduled_at")
+  createdAt     DateTime               @default(now()) @map("created_at")
+  updatedAt     DateTime               @updatedAt @map("updated_at")
+  updatedBy     String?                @map("updated_by")
+  createdBy     String?                @map("created_by")
+  updatedByUser Users?                 @relation("updatedByUser", fields: [updatedBy], references: [userId])
+  createdByUser Users?                 @relation("createdByUser", fields: [createdBy], references: [userId])
+
+  template         MessagingTemplate? @relation(fields: [templateId], references: [id])
+  messagingProfile MessagingProfile?  @relation(fields: [profileId], references: [id])
+
+  @@map("messaging_log")
+}
+
+enum MessagingEventKeyEnum {
+  SIGN_UP_OTP_GENERATE
+  PASSWORD_RESET
+  PASSWORD_RESET_SUCCESS
+  WELCOME_EMAIL
+}
+
+enum MessagingLogStatusEnum {
+  FAILED
+  QUEUED
+  SENT
+  SENDING
+}
+
+enum MessagingChannel {
+  EMAIL
+  SMS
+  WHATSAPP
+  PUSH
+}
+
+enum MessagePriorityEnum {
+  HIGH
+  MEDIUM
+  LOW
 }
 
 enum Gender {
