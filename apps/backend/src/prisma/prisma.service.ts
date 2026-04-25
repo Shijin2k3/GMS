@@ -15,7 +15,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     const pool = new Pool({ connectionString });
 
     //Initialize the Prisma Adapter with the pool
-    const adapter = new PrismaPg(pool);
+    const adapter = new PrismaPg(pool as any);
     super({
       adapter,
     });
