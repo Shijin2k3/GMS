@@ -4,6 +4,7 @@ import Navbar from '@/components/ui/navbar';
 import { DataTable, TableAction } from '@/components/table/DataTable';
 import { ColumnDef } from '@tanstack/react-table';
 import { useMembers } from '../hooks/useMembers';
+import { PageHeader } from '@/components/atoms/PageHeader/PageHeader';
 
 type UserRow = {
   id: string;
@@ -55,11 +56,20 @@ export function MembersList() {
     },
   ];
 
+  const handleAddMember=()=>{
+    console.log("Add MemberClicked")
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <div className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Members</h2>
+         <PageHeader
+          title="Members"
+          actionLabel="Add Member"
+          actionIcon="plus"
+          onActionClick={handleAddMember}
+        />
 
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
