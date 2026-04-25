@@ -1,4 +1,4 @@
-import { Dashboard } from '@/features/members/components/DashBoard';
+import { Dashboard } from '@/features/dashBoard/components/DashBoard';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
