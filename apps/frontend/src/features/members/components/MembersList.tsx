@@ -16,7 +16,7 @@ type UserRow = {
   status: string;
 };
 
-export function Dashboard() {
+export function MembersList() {
   const { data: members, isLoading } = useMembers();
 
   const columns: ColumnDef<UserRow>[] = [
@@ -59,7 +59,7 @@ export function Dashboard() {
     <div className="min-h-screen bg-gray-100">
       <Navbar />
       <div className="container mx-auto p-4">
-        <h2 className="text-2xl font-bold mb-4">Welcome to the Dashboard</h2>
+        <h2 className="text-2xl font-bold mb-4">Members</h2>
 
         {isLoading ? (
           <div className="flex items-center justify-center h-64">
