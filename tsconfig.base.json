@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@frontend/*": ["apps/frontend/*"],
-      "@/*": ["apps/frontend/src/*"]
+      "@/*": ["apps/frontend/src/*"],
+      "@frontend/*": ["apps/frontend/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]
